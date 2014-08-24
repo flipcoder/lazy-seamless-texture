@@ -4,12 +4,15 @@ import sys
 import os
 from PIL import Image
 
+def rreplace(s, match, repl, count=1):
+    return repl.join(s.rsplit(match, count))
+
 for img_fn in sys.argv[1:]:
     # ignore generated files
     if img_fn.find("_seamless.") != -1:
         continue
     
-    simg_fn = img_fn.replace("[.]","_seamless.")
+    simg_fn = rreplace(img_fn, ".", "_seamless.")
     
     # seamless version already exists, dont regenerate
     if os.path.isfile(simg_fn):
